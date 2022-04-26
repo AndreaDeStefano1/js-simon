@@ -1,12 +1,15 @@
 const numbersCollection = [];
 const numbers = document.getElementById('target-numbers');
 const timer = document.getElementById('time-to-hide');
+let counter = document.getElementById('count');23
+const guessed = document.getElementById('numeri-indovinati');
 let sec = 5;
-const userNumber = [];
+const userNumbers = [];
 
 stampNumbers();
-console.log(numbersCollection);
 const myInterval = setInterval(gestisciInterval, 1000);
+setTimeout( getUserInput, 7001 );
+
 
 function timerToHide(){  
   timer.innerText = `Hai ancora ${sec} secondi per memorizzare i numeri sopra `;   
@@ -20,6 +23,7 @@ function stampNumbers(){
       numbers.append(`${num}.`);
     }else numbers.append(`${num}, `);
   } 
+  console.log(numbersCollection);
 }
 
 function gestisciInterval() {
@@ -53,8 +57,28 @@ function getRndInteger( min, max ) {
 function getUserInput (){
 
   for (let i = 0; i < 5; i++) {
-    let num
+    const num = parseInt(prompt('Inserisci un numero di quelli che erano visualizzati'));
+    userNumbers.push(num)
     
   }
-  
+  foundedNumbers();
+
+}
+
+function foundedNumbers(){
+  let count = 0;
+  for (let i = 0; i < userNumbers.length; i++) {
+    const element = userNumbers[i];
+    console.log(element);
+    if(numbersCollection.includes(element)){
+      numbersCollection.splice(numbersCollection.indexOf(element), 1)
+      count++;
+      counter.innerText = `${count}`;
+      guessed.innerText += `${element}  `;
+      document.getElementById('response').classList.remove('d-none')
+    }
+    
+    
+    console.log(numbersCollection)
+  }
 }
